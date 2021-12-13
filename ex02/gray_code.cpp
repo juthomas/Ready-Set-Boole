@@ -86,8 +86,8 @@ int main(int argc, char **argv)
 	{
 		for (int i = 0; i < 100; i++)
 		{
-			printf("%02d : ", i);
 			result = gray_code(i);
+			printf("%02d : (%03d) ", i, result);
 			printBits(sizeof(uint32_t), &result);
 		}
 		return (0);
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 	printf("a : ");
 	printBits(sizeof(uint32_t), &a);
 	result = gray_code(a);
-	printf("result : ");
+	printf("result (%d): ", result);
 	printBits(sizeof(uint32_t), &result);
 	return (0);
 }
