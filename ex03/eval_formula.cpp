@@ -142,12 +142,3 @@ bool eval_formula(std::string formula)
 	// apply_operations(boolean_stack, operators_stack);
 	return (apply_operations(boolean_stack, operators_stack));
 }
-
-int main(int argc, char **argv)
-{
-	if (argc == 2)
-	{
-		std::string str(argv[1]);
-		printf("%s\n", eval_formula(str) ? "true" : "false");
-	}
-}

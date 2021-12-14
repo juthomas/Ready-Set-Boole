@@ -13,7 +13,7 @@ SRC_DIR = .
 
 CC = g++ $(FLAGS)
 
-SRC_FT = eval_formula
+SRC_FT = main eval_formula
 
 ## List of Utilities
 
@@ -32,12 +32,12 @@ $(OBJ_DIRS):
 	@mkdir -p $@
 	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDES)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDES)
 	@$(CC) -c $< -o $@
 	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Compiled]\0033[1;37m"
 
 $(NAME): $(OBJ_DIRS) $(SRC)
-	@g++ -g -c $(SRC) -o $(OBJ)
+	@$(MAKE) -s -j $(OBJ)
 	@echo "$(COLOR)Objects \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"
 	@$(CC) $(OBJ) -o $@
 	@echo "$(COLOR)$(NAME) \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"

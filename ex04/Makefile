@@ -1,6 +1,6 @@
 ## Name of Project
 
-NAME = gray_code
+NAME = eval_formula
 
 ## Color for compilating (pink)
 
@@ -13,7 +13,7 @@ SRC_DIR = .
 
 CC = g++ $(FLAGS)
 
-SRC_FT = gray_code
+SRC_FT = eval_formula
 
 ## List of Utilities
 
@@ -32,12 +32,12 @@ $(OBJ_DIRS):
 	@mkdir -p $@
 	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDES)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDES)
 	@$(CC) -c $< -o $@
 	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Compiled]\0033[1;37m"
 
 $(NAME): $(OBJ_DIRS) $(SRC)
-	@$(MAKE) -s -j $(OBJ)
+	@g++ -g -c $(SRC) -o $(OBJ)
 	@echo "$(COLOR)Objects \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"
 	@$(CC) $(OBJ) -o $@
 	@echo "$(COLOR)$(NAME) \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"
