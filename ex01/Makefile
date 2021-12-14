@@ -11,17 +11,29 @@ COLOR = \0033[1;35m
 OBJ_DIR = obj
 SRC_DIR = .
 
+# Add ext dirs here
+EX00_DIR = ex00
+
 CC = g++ $(FLAGS)
 
-SRC_FT = multiplier
+SRC_FT = main multiplier
+EX00_FT = adder
 
 ## List of Utilities
 
-SRC = $(SRC_FT:%=$(SRC_DIR)/%.cpp)
+INT_SRC = $(SRC_FT:%=$(SRC_DIR)/%.cpp)
+# EXT_SRC = $(EX00_FT:%=./../$(EX00_DIR)/%.cpp)
 
-OBJ = $(SRC:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)
+SRC = $(SRC_FT:%=$(SRC_DIR)/%.cpp) \
+		$(EX00_FT:%=./../$(EX00_DIR)/%.cpp)
+		# $(SRC_FT:%=$(SRC_DIR)/%.cpp) \
+		# $(EX00_FT:%=$(EX00_DIR)/%.cpp)
+OBJ = $(INT_SRC:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o) \
+		$(EX00_FT:%=$(OBJ_DIR)/%.o)
+	# $(SRC:$(EX00_DIR)%.cpp=$(OBJ_DIR)%.o
 
 OBJ_DIRS = $(OBJ_DIR)
+			# $(EX00_DIR2:%=$(OBJ_DIR)/%)
 
 ## Rules of Makefile
 
@@ -32,7 +44,11 @@ $(OBJ_DIRS):
 	@mkdir -p $@
 	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDES)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@$(CC) -c $< -o $@
+	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Compiled]\0033[1;37m"
+
+$(OBJ_DIR)/%.o: ./../$(EX00_DIR)/%.cpp
 	@$(CC) -c $< -o $@
 	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Compiled]\0033[1;37m"
 
