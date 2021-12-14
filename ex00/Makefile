@@ -13,7 +13,7 @@ SRC_DIR = .
 
 CC = g++ $(FLAGS)
 
-SRC_FT = adder
+SRC_FT = main adder
 
 ## List of Utilities
 
