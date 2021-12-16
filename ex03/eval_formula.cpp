@@ -109,6 +109,10 @@ void printBT(const std::string& prefix, const t_tree_node* node, bool isLeft)
 
 uint8_t		resolve_tree(t_tree_node* node, bool side)
 {
+	if (node == NULL)
+	{
+		return (0);
+	}
 	if (node->operator_index <= 1)
 	{
 		return (node->operator_index);
