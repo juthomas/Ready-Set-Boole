@@ -107,7 +107,7 @@ void printBT(const std::string& prefix, const t_tree_node* node, bool isLeft)
     }
 }
 
-uint8_t		resolve_tree(t_tree_node* node, t_tree_node* parent, bool side)
+uint8_t		resolve_tree(t_tree_node* node, bool side)
 {
 	if (node->operator_index <= 1)
 	{
@@ -115,14 +115,9 @@ uint8_t		resolve_tree(t_tree_node* node, t_tree_node* parent, bool side)
 	}
 	else
 	{
-		uint8_t a = resolve_tree(node->left, node, false);
-		uint8_t b = resolve_tree(node->right, node, true);
-		// printf("%c [%c] %s -%d- -%d-\n",
-		// 	g_operators[node->operator_index].input_sign,
-		// 	parent ? g_operators[parent->operator_index].input_sign : ' ',
-		// 	side ? "right" : "left", a, b);
-
-		 return (g_operators[node->operator_index].f_prop(a, b));
+		uint8_t a = resolve_tree(node->left, false);
+		uint8_t b = resolve_tree(node->right, true);
+		return (g_operators[node->operator_index].f_prop(a, b));
 	}
 }
 
@@ -217,5 +212,5 @@ bool eval_formula(std::string formula)
 		}
 	}
 
-	return (resolve_tree(boolean_stack[0], NULL, false));
+	return (resolve_tree(boolean_stack[0], false));
 }

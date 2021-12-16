@@ -1,6 +1,6 @@
 ## Name of Project
 
-NAME = eval_formula
+NAME = print_truth_table
 
 ## Color for compilating (pink)
 
@@ -11,15 +11,25 @@ COLOR = \0033[1;35m
 OBJ_DIR = obj
 SRC_DIR = .
 
+# Add ext dirs here
+EX03_DIR = ex03
+
 CC = g++ $(FLAGS)
 
-SRC_FT = eval_formula
+SRC_FT = main print_truth_table
+EX03_FT = eval_formula
+
 
 ## List of Utilities
+INT_SRC = $(SRC_FT:%=$(SRC_DIR)/%.cpp)
 
-SRC = $(SRC_FT:%=$(SRC_DIR)/%.cpp)
 
-OBJ = $(SRC:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)
+SRC = $(SRC_FT:%=$(SRC_DIR)/%.cpp) \
+		$(EX03_FT:%=./../$(EX03_DIR)/%.cpp)
+
+OBJ = $(INT_SRC:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o) \
+		$(EX03_FT:%=$(OBJ_DIR)/%.o)
+
 
 OBJ_DIRS = $(OBJ_DIR)
 
@@ -32,12 +42,16 @@ $(OBJ_DIRS):
 	@mkdir -p $@
 	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDES)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@$(CC) -c $< -o $@
+	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Compiled]\0033[1;37m"
+
+$(OBJ_DIR)/%.o: ./../$(EX03_DIR)/%.cpp
 	@$(CC) -c $< -o $@
 	@echo "$(COLOR)$@ \033[100D\033[40C\0033[1;32m[Compiled]\0033[1;37m"
 
 $(NAME): $(OBJ_DIRS) $(SRC)
-	@g++ -g -c $(SRC) -o $(OBJ)
+	@$(MAKE) -s -j $(OBJ)
 	@echo "$(COLOR)Objects \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"
 	@$(CC) $(OBJ) -o $@
 	@echo "$(COLOR)$(NAME) \033[100D\033[40C\0033[1;32m[Created]\0033[1;37m"
