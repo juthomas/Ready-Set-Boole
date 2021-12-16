@@ -10,6 +10,7 @@ COLOR = \0033[1;35m
 
 OBJ_DIR = obj
 SRC_DIR = .
+# FLAGS = -g -Wall 
 
 CC = g++ $(FLAGS)
 
