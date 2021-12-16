@@ -1,0 +1,174 @@
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <iostream>
+
+typedef uint8_t(*t_operating)(uint8_t a, uint8_t b);
+
+typedef struct			s_tree_node
+{
+	uint8_t				operator_index;
+	uint8_t				result;
+	struct s_tree_node	*left;
+	struct s_tree_node	*right;
+	s_tree_node(uint8_t index)
+	{
+		operator_index = index;
+		left = NULL;
+		right = NULL;
+		result = 0;
+	}
+
+}						t_tree_node;
+
+typedef struct			s_operators
+{
+	char				input_sign;
+	char				output_sign;
+	t_operating			f_prop;
+}						t_operators;
+
+void error_function(int32_t line, const char* function, const char* message)
+{
+	printf("[%03d] [%s] - %s\n", line, function, message);
+	exit(0);
+}
+
+uint8_t negation_function(uint8_t a, uint8_t b)
+{
+	return (!a);
+}
+
+uint8_t conjunction_function(uint8_t a, uint8_t b)
+{
+	return (a & b);
+}
+
+uint8_t disjunction_function(uint8_t a, uint8_t b)
+{
+	return (a | b);
+}
+
+uint8_t exclusive_disjunction_function(uint8_t a, uint8_t b)
+{
+	return (a ^ b);
+}
+
+uint8_t material_condition_function(uint8_t a, uint8_t b)
+{
+	return (!(!a & b));
+}
+
+uint8_t logical_equivalence_function(uint8_t a, uint8_t b)
+{
+	return (a == b);
+}
+
+static const t_operators g_operators[] = {
+	(t_operators){.input_sign = '0', .output_sign = '0', .f_prop = NULL},
+	(t_operators){.input_sign = '1', .output_sign = '1', .f_prop = NULL},
+	(t_operators){.input_sign = '!', .output_sign = '!', .f_prop = negation_function},
+	(t_operators){.input_sign = '&', .output_sign = '&', .f_prop = conjunction_function},
+	(t_operators){.input_sign = '|', .output_sign = '|', .f_prop = disjunction_function},
+	(t_operators){.input_sign = '^', .output_sign = '^', .f_prop = exclusive_disjunction_function},
+	(t_operators){.input_sign = '>', .output_sign = '>', .f_prop = material_condition_function},
+	(t_operators){.input_sign = '=', .output_sign = '=', .f_prop = logical_equivalence_function},
+};
+
+uint8_t		resolve_tree(t_tree_node* node, bool side)
+{
+	if (node == NULL)
+	{
+		return (0);
+	}
+	if (node->operator_index <= 1)
+	{
+		return (node->operator_index);
+	}
+	else
+	{
+		printf("[%c]\n", g_operators[node->operator_index].input_sign);
+		uint8_t a = resolve_tree(node->left, false);
+		uint8_t b = resolve_tree(node->right, true);
+		return (g_operators[node->operator_index].f_prop(a, b));
+	}
+}
+
+void printBT(const std::string& prefix, const t_tree_node* node, bool isLeft)
+{
+    if( node != nullptr )
+    {
+        std::cout << prefix;
+
+        std::cout << (isLeft ? "├──" : "└──" );
+
+        // print the value of the node
+        std::cout << g_operators[node->operator_index].input_sign << std::endl;
+
+        // enter the next tree level - left and right branch
+        printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
+        printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
+    }
+}
+
+
+t_tree_node* create_tree_from_formula(std::string formula)
+{
+	std::vector<t_tree_node*> boolean_stack;
+	std::vector<t_operators> operators_stack;
+	bool char_exist = false;
+	t_tree_node	*tmp_left;
+	t_tree_node	*tmp_right;
+	t_tree_node	*tmp_node;
+
+	for (std::string::size_type i = 0; i < formula.size(); i++) {
+		for (uint8_t current_index = 0;
+			current_index < sizeof(g_operators) / sizeof(t_operators);
+			current_index++)
+		{
+			if (formula[i] == g_operators[current_index].input_sign
+				&& (formula[i] == '0' || formula[i] == '1'))
+			{
+				tmp_node = new t_tree_node(current_index);
+				boolean_stack.push_back(tmp_node);
+				char_exist = true;
+			}
+			else if (formula[i] == g_operators[current_index].input_sign
+				&& formula[i] == '!')
+			{
+				tmp_node = new t_tree_node(current_index);
+				tmp_right = (boolean_stack).back();
+				(boolean_stack).pop_back();
+				tmp_node->right = tmp_right;
+				boolean_stack.push_back(tmp_node);
+			}
+			else if (formula[i] == g_operators[current_index].input_sign)
+			{
+				tmp_node = new t_tree_node(current_index);
+				tmp_right = (boolean_stack).back();
+				(boolean_stack).pop_back();
+				tmp_left = (boolean_stack).back();
+				(boolean_stack).pop_back();
+				tmp_node->left = tmp_left;
+				tmp_node->right = tmp_right;
+				boolean_stack.push_back(tmp_node);
+			}
+		}
+		if (!char_exist)
+		{
+			printf("This sign is not valid : '%c'\n", formula[i]);
+			exit(0);
+		}
+	}
+	return (boolean_stack[0]);
+}
+
+
+void	negation_normal_form(std::string formula)
+{
+	printf("formula : %s\n", formula.c_str());
+	t_tree_node* node = create_tree_from_formula(formula);
+	printBT("", node, false);
+	resolve_tree(node, false);
+
+}
