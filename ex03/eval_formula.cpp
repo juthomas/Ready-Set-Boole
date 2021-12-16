@@ -119,8 +119,8 @@ uint8_t		resolve_tree(t_tree_node* node, t_tree_node* parent, bool side)
 	}
 	else
 	{
-		uint8_t a = visualize_tree(node->left, node, false);
-		uint8_t b = visualize_tree(node->right, node, true);
+		uint8_t a = resolve_tree(node->left, node, false);
+		uint8_t b = resolve_tree(node->right, node, true);
 		printf("%c [%c] %s -%d- -%d-\n",
 			g_operators[node->operator_index].input_sign,
 			parent ? g_operators[parent->operator_index].input_sign : ' ',
@@ -261,7 +261,7 @@ bool eval_formula(std::string formula)
 
 	// visualize_stack(boolean_stack);
 	printf("---\n");
-	printf("Tree result : %d", visualize_tree(boolean_stack[0], NULL, false));
+	printf("Tree result : %d", resolve_tree(boolean_stack[0], NULL, false));
 	printf("---\n");
 	printBT("", boolean_stack[0], false);
 	// apply_operations(boolean_stack, operators_stack);
