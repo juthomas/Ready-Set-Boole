@@ -109,10 +109,6 @@ void printBT(const std::string& prefix, const t_tree_node* node, bool isLeft)
 
 uint8_t		resolve_tree(t_tree_node* node, t_tree_node* parent, bool side)
 {
-	// if (node == NULL)
-	// {
-	// 	return 0;
-	// }
 	if (node->operator_index <= 1)
 	{
 		return (node->operator_index);
@@ -121,10 +117,10 @@ uint8_t		resolve_tree(t_tree_node* node, t_tree_node* parent, bool side)
 	{
 		uint8_t a = resolve_tree(node->left, node, false);
 		uint8_t b = resolve_tree(node->right, node, true);
-		printf("%c [%c] %s -%d- -%d-\n",
-			g_operators[node->operator_index].input_sign,
-			parent ? g_operators[parent->operator_index].input_sign : ' ',
-			side ? "right" : "left", a, b);
+		// printf("%c [%c] %s -%d- -%d-\n",
+		// 	g_operators[node->operator_index].input_sign,
+		// 	parent ? g_operators[parent->operator_index].input_sign : ' ',
+		// 	side ? "right" : "left", a, b);
 
 		 return (g_operators[node->operator_index].f_prop(a, b));
 	}
@@ -180,40 +176,8 @@ bool eval_formula(std::string formula)
 	t_tree_node	*tmp_left;
 	t_tree_node	*tmp_right;
 	t_tree_node	*tmp_node;
-	// for (std::string::size_type i = 0; i < formula.size(); i++) {
-	// 	char_exist = false;
-	// 	if (formula[i] == '0' || formula[i] == '1')
-	// 	{
-	// 		boolean_stack.push_back(formula[i] == '1' ? true : false);
-	// 		char_exist = true;
-	// 	}
-	// 	else for (uint8_t current_index = 0;
-	// 		current_index < sizeof(g_operators) / sizeof(t_operators);
-	// 		current_index++)
-	// 	{
-	// 		if (formula[i] == g_operators[current_index].input_sign)
-	// 		{
-	// 			// g_operators[current_index].f_prop(&boolean_stack);
-	// 			operators_stack.push_back(g_operators[current_index]);
-	// 			char_exist = true;
-	// 		}
-	// 	}
-	// 	if (!char_exist)
-	// 	{
-	// 		printf("This sign is not valid : '%c'\n", formula[i]);
-	// 		exit(0);
-	// 	}
-	// }
-
 
 	for (std::string::size_type i = 0; i < formula.size(); i++) {
-		// if (formula[i] == '0' || formula[i] == '1')
-		// {
-		// 	// boolean_stack.push_back(formula[i] == '1' ? true : false);
-		// 	tmp_node = new t_tree_node(i);
-		// 	char_exist = true;
-		// }
-		// else 
 		for (uint8_t current_index = 0;
 			current_index < sizeof(g_operators) / sizeof(t_operators);
 			current_index++)
@@ -231,10 +195,7 @@ bool eval_formula(std::string formula)
 				tmp_node = new t_tree_node(current_index);
 				tmp_right = (boolean_stack).back();
 				(boolean_stack).pop_back();
-				// tmp_left = (boolean_stack).back();
-				// (boolean_stack).pop_back();
 				tmp_node->right = tmp_right;
-				// tmp_node->left = tmp_left;
 				boolean_stack.push_back(tmp_node);
 			}
 			else if (formula[i] == g_operators[current_index].input_sign)
@@ -247,9 +208,6 @@ bool eval_formula(std::string formula)
 				tmp_node->left = tmp_left;
 				tmp_node->right = tmp_right;
 				boolean_stack.push_back(tmp_node);
-				// // g_operators[current_index].f_prop(&boolean_stack);
-				// operators_stack.push_back(g_operators[current_index]);
-				// char_exist = true;
 			}
 		}
 		if (!char_exist)
@@ -259,12 +217,5 @@ bool eval_formula(std::string formula)
 		}
 	}
 
-	// visualize_stack(boolean_stack);
-	printf("---\n");
-	printf("Tree result : %d", resolve_tree(boolean_stack[0], NULL, false));
-	printf("---\n");
-	printBT("", boolean_stack[0], false);
-	// apply_operations(boolean_stack, operators_stack);
-	// return (apply_operations(boolean_stack, operators_stack));
-	return (true);
+	return (resolve_tree(boolean_stack[0], NULL, false));
 }
