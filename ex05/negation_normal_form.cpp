@@ -275,11 +275,11 @@ t_tree_node* create_tree_from_formula(std::string formula)
 
 void	negation_normal_form(std::string formula)
 {
-	printf("formula : %s\n", formula.c_str());
+	// printf("formula : %s\n", formula.c_str());
 	t_tree_node* node = create_tree_from_formula(formula);
-	printBT("", node, false);
+	// printBT("", node, false);
 	resolve_tree(node, false);
-	printBT("", node, false);
+	// printBT("", node, false);
 	visualize_tree(node);
 	printf("\n");
 
