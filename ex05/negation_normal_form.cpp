@@ -149,6 +149,22 @@ uint8_t		resolve_tree(t_tree_node* node, bool side)
 		node->left->right = tmp_right;
 		node->character = '&';
 	}
+	else if (node->character == '^')
+	{
+
+		t_tree_node *tmp_left = node->left;
+		t_tree_node *tmp_right = node->right;
+		node->left = new t_tree_node(4);
+		node->right = new t_tree_node(4);
+		node->right->right = new t_tree_node(3);
+		node->left->left = new t_tree_node(3);
+		node->right->right->right = tmp_right;
+		node->left->left->right = tmp_left;
+
+		node->right->left = tmp_left;
+		node->left->right = tmp_right;
+		node->character = '|';
+	}
 
 	if (node->operator_index <= 2)
 	{
