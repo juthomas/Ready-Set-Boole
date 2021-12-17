@@ -58,7 +58,7 @@ uint8_t exclusive_disjunction_function(uint8_t a, uint8_t b)
 
 uint8_t material_condition_function(uint8_t a, uint8_t b)
 {
-	return (!(!a & b));
+	return (!(a & !b));
 }
 
 uint8_t logical_equivalence_function(uint8_t a, uint8_t b)
@@ -119,8 +119,8 @@ uint8_t		resolve_tree(t_tree_node* node, bool side)
 	}
 	else
 	{
-		uint8_t a = resolve_tree(node->left, false);
-		uint8_t b = resolve_tree(node->right, true);
+		uint8_t b = resolve_tree(node->left, false);
+		uint8_t a = resolve_tree(node->right, true);
 		return (g_operators[node->operator_index].f_prop(a, b));
 	}
 }
@@ -215,6 +215,8 @@ bool eval_formula(std::string formula)
 			exit(0);
 		}
 	}
-
+	// printf("\n");
+	// printBT("", boolean_stack[0], false);
+	// printf("\n");
 	return (resolve_tree(boolean_stack[0], false));
 }

@@ -75,7 +75,7 @@ void	print_truth_table(std::string formula)
 	print_header(formula);
 	while ((str = replace_variables(formula, current_iteration)) != "")
 	{
-		printf("| %s |\n", eval_formula(str) ? "1" : "0");
+		printf("| %s |  %s\n", eval_formula(str) ? "1" : "0", str.c_str());
 		current_iteration++;
 	}
 }
