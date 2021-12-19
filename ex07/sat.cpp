@@ -72,14 +72,11 @@ bool	sat(std::string formula)
 {
 	std::string str = "";
 	uint32_t current_iteration = 0;
-	// print_header(formula);
-	bool is_at_least_one_true = false;
 	while ((str = replace_variables(formula, current_iteration)) != "")
 	{
 		if (eval_formula(str))
-			is_at_least_one_true = true;
-		// printf("| %s |\n", eval_formula(str) ? "1" : "0");
+			return (true);
 		current_iteration++;
 	}
-	return (is_at_least_one_true);
+	return (false);
 }
