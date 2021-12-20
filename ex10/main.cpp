@@ -16,5 +16,5 @@ int main(int argc, char **argv)
 	
 	printf("input : x=%d y=%d\n", x, y);
 	result = map(x, y);
-	printf("output : %.15f\n", result);
+	printf("output : %.20f\n", result);
 }
