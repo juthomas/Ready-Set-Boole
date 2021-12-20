@@ -21,9 +21,9 @@ void printBits(size_t const size, void const * const ptr)
 	puts("");
 }
 
-std::vector<std::vector<int32_t>> powerset(std::vector<int32_t> set)
+std::vector<std::vector<int32_t> > powerset(std::vector<int32_t> set)
 {
-	std::vector<std::vector<int32_t>> return_value;
+	std::vector<std::vector<int32_t> > return_value;
 	// uint32_t xor_result;
 	// uint32_t and_result;
 

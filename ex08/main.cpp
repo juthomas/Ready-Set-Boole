@@ -2,7 +2,7 @@
 #include <vector>
 #include <array>
 
-std::vector<std::vector<int32_t>> powerset(std::vector<int32_t> set);
+std::vector<std::vector<int32_t> > powerset(std::vector<int32_t> set);
 
 // void printBits(size_t const size, void const * const ptr);
 
@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 		printf("]\n\n");
 
 
-		std::vector<std::vector<int32_t>> powerset_output;
+		std::vector<std::vector<int32_t> > powerset_output;
 		powerset_output = powerset(out);
 		printf("output : \n");
 		printf("[\n");

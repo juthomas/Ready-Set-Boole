@@ -2,7 +2,7 @@
 #include <vector>
 
 
-std::vector<int32_t> eval_set(std::string formula, std::vector<std::vector<int32_t>>);
+std::vector<int32_t> eval_set(std::string formula, std::vector<std::vector<int32_t> >);
 
 int main(int argc, char **argv)
 {
@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 
 	if (argc == 2)
 	{
-		std::vector<std::vector<int32_t>> in;
+		std::vector<std::vector<int32_t> > in;
 	    std::vector<int32_t> out;
 
 		// powerset_output = powerset(out);
@@ -19,12 +19,12 @@ int main(int argc, char **argv)
 
 
 	    std::vector<int32_t> in_1;
-		in_1.push_back(0);
+		// in_1.push_back(0);
 		in_1.push_back(2);
-		in_1.push_back(4);
+		// in_1.push_back(4);
 		in.push_back(in_1);
 	    std::vector<int32_t> in_2;
-		in_2.push_back(1);
+		// in_2.push_back(1);
 		in_2.push_back(2);
 		in.push_back(in_2);
 	    std::vector<int32_t> in_3;

@@ -53,7 +53,7 @@ std::vector<int32_t> conjunction_function(std::vector<int32_t> a, std::vector<in
 		child_contain = false;
 		for (size_t u = 0; u < b.size(); u++)
 		{
-			if (a[i] == b[i])
+			if (a[i] == b[u])
 			{
 				child_contain = true;
 			}
@@ -82,7 +82,7 @@ std::vector<int32_t> disjunction_function(std::vector<int32_t> a, std::vector<in
 		bool child_contain = false;
 		for (size_t i = 0; i < a.size(); i++)
 		{
-			if (a[i] == b[i])
+			if (a[i] == b[u])
 			{
 				child_contain = true;
 			}
@@ -294,7 +294,7 @@ void	view_operations(std::vector<uint8_t> boolean_stack, std::vector<t_operators
 	}
 }
 
-std::vector<int32_t> eval_set(std::string formula, std::vector<std::vector<int32_t>> sets)
+std::vector<int32_t> eval_set(std::string formula, std::vector<std::vector<int32_t> > sets)
 {
 	std::vector<t_tree_node*> boolean_stack;
 	std::vector<t_operators> operators_stack;
@@ -303,7 +303,7 @@ std::vector<int32_t> eval_set(std::string formula, std::vector<std::vector<int32
 	t_tree_node	*tmp_right;
 	t_tree_node	*tmp_node;
 
-	printf("formula : %s\n", formula.c_str());
+	// printf("formula : %s\n", formula.c_str());
 
 	for (std::string::size_type i = 0; i < formula.size(); i++) {
 		for (uint8_t current_index = 0;
@@ -347,9 +347,9 @@ std::vector<int32_t> eval_set(std::string formula, std::vector<std::vector<int32
 			exit(0);
 		}
 	}
-	printf("\n");
-	printBT("", boolean_stack[0], false);
-	printf("\n");
+	// printf("\n");
+	// printBT("", boolean_stack[0], false);
+	// printf("\n");
 	return (resolve_tree(boolean_stack[0], false));
 	// return (std::vector<int32_t>());
 }
