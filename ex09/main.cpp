@@ -19,13 +19,14 @@ int main(int argc, char **argv)
 
 
 	    std::vector<int32_t> in_1;
-		// in_1.push_back(0);
+		in_1.push_back(0);
+		in_1.push_back(1);
 		in_1.push_back(2);
-		// in_1.push_back(4);
 		in.push_back(in_1);
 	    std::vector<int32_t> in_2;
-		// in_2.push_back(1);
-		in_2.push_back(2);
+		in_2.push_back(0);
+		in_2.push_back(3);
+		in_2.push_back(4);
 		in.push_back(in_2);
 	    std::vector<int32_t> in_3;
 		in_3.push_back(0);
